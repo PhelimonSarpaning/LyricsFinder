@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
      //call scrolling page
     public void lyricsPage (View view){
         Intent intent = new Intent (this, ScrollingActivity.class);
+        intent.putExtra("songName", songName);
+        intent.putExtra("songArtist", songArtist);
         startActivity(intent);
     }
 

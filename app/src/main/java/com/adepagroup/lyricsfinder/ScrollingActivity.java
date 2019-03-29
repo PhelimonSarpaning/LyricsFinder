@@ -1,5 +1,6 @@
 package com.adepagroup.lyricsfinder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -35,11 +36,16 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
            //MainActivity.songName;
-            EditText songNameText = (EditText)findViewById(R.id.songName);
-           String songName = songNameText.getText().toString();
-            EditText songArtistText = (EditText)findViewById(R.id.songArtist);
-            String songArtist = songArtistText.getText().toString();
+//            EditText songNameText = (EditText)findViewById(R.id.songName);
+//          // String songName = songNameText.getText().toString();
+//            EditText songArtistText = (EditText)findViewById(R.id.songArtist);
+//            String songArtist = songArtistText.getText().toString();
             final TextView textView = (TextView) findViewById(R.id.songLyrics);
+
+            Intent intent = getIntent();
+            String songName = intent.getStringExtra("songName");
+            String songArtist = intent.getStringExtra("songArtist");
+            System.out.print("songArtist is " + songArtist);
 // ...
 
             // Instantiate the RequestQueue.
