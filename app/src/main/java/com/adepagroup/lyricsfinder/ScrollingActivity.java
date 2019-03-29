@@ -18,6 +18,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ScrollingActivity extends AppCompatActivity {
 
     @Override
@@ -27,19 +30,16 @@ public class ScrollingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
        System.out.println("In scrolling Activity");
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-           //MainActivity.songName;
-//            EditText songNameText = (EditText)findViewById(R.id.songName);
-//          // String songName = songNameText.getText().toString();
-//            EditText songArtistText = (EditText)findViewById(R.id.songArtist);
-//            String songArtist = songArtistText.getText().toString();
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+           //get text from first activity;
+//
             final TextView textView = (TextView) findViewById(R.id.songLyrics);
 
             Intent intent = getIntent();
@@ -65,13 +65,20 @@ public class ScrollingActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             // Display the first 500 characters of the response string.
-                            textView.setText( response.toString());
+                            String mus_lyrics = null;
+                            try {
+                                JSONObject lyrics = new JSONObject(response);
+                                mus_lyrics = lyrics.getString("lyrics");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            textView.setText(mus_lyrics);
                             Log.d("response", response);
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    textView.setText("That didn't work!");
+                    textView.setText("That didn't work! Couldn't find lyrics.");
                 }
             });
         // Add the request to the RequestQueue.
